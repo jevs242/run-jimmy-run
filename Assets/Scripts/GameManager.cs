@@ -16,17 +16,30 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject _player;
     [SerializeField] private TextMeshProUGUI _distanceText;
     [SerializeField] private Slider _resistenceSlider;
+    [SerializeField] private TextMeshProUGUI _highScoreText;
+    [SerializeField] private TextMeshProUGUI _ScoreText;
+    [SerializeField] private AudioSource _menuSong;
+    [SerializeField] private AudioSource _gameSound;
+
+    [SerializeField] private AudioClip _endSong;
+    [SerializeField] private AudioClip _actionSound;
+    [SerializeField] private AudioClip _deadSound;
+
 
 
     private bool _beginPlay = false;
+    private bool _endPlay = false;
     private float _distance = 0;
     private int _lastRandom = -1;
+    private float _highRecord = 0;
+    private int _currentNumber = 0;
 
     // Start is called before the first frame update
     void Start()
     {
         //_player.gameObject.GetComponent<SpriteRenderer>().enabled = false;
         _menuScreen.gameObject.SetActive(true);
+        _highRecord = PlayerPrefs.GetFloat("HighRecord");
     }
 
     private void Update()
@@ -34,14 +47,23 @@ public class GameManager : MonoBehaviour
         if (!GetBeginPlay()) return;
         _distance += Time.deltaTime * (int)_player.gameObject.GetComponent<Player>().speed;
         SetUI();
+
+        if ((int)_distance % 400 == 0 && (int)_distance != _currentNumber)
+        {
+            _currentNumber = (int)_distance;
+            print((int)_distance);
+            _player.gameObject.GetComponent<Player>().nowSpeed += 1.0f;
+            _player.gameObject.GetComponent<Player>().nowSpeed = Math.Clamp(_player.gameObject.GetComponent<Player>().nowSpeed, 10, 14);
+        }
     }
 
     public void BeginPlay()
     {
-        //_player.gameObject.GetComponent<SpriteRenderer>().enabled = true;
         ResumeGame();
         _gameScreen.gameObject.SetActive(true);
         _beginPlay = true;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     public void QuitGame()
@@ -52,13 +74,13 @@ public class GameManager : MonoBehaviour
     public void PauseGame()
     {
         _beginPlay = false;
-        //Time.timeScale = 0;
     }
 
     public void ResumeGame()
     {
         _beginPlay = true;
-        //Time.timeScale = 1;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     public void ResetGame()
@@ -68,6 +90,12 @@ public class GameManager : MonoBehaviour
 
     public void IsDead()
     {
+        if (_endPlay) return;
+        _endPlay = true;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        _menuSong.clip = _endSong;
+        _menuSong.Play();
         _gameOverScreen.SetActive(true);
         _player.gameObject.GetComponent<SpriteRenderer>().enabled = false;
         _gameScreen.gameObject.SetActive(false);
@@ -75,6 +103,13 @@ public class GameManager : MonoBehaviour
         player.enabled = false;
         player.speed = 0;
         player.PlayParticule();
+        
+        if(PlayerPrefs.GetFloat("HighScore") < _distance)
+        {
+            PlayerPrefs.SetFloat("HighScore", _distance);
+        }
+        _ScoreText.text = $"Score : {string.Format(String.Format("{0:N0}", (int)_distance))}";
+        _highScoreText.text = $"HighScore : {string.Format(String.Format("{0:N0}", (int)PlayerPrefs.GetFloat("HighScore")))}";
     }
 
     private void SetUI()
@@ -89,6 +124,8 @@ public class GameManager : MonoBehaviour
         _gameScreen.gameObject.SetActive(false);
         PauseGame();
         _pauseScreen.SetActive(true);
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
     }
 
     public void SetLastRandom(int random)
@@ -104,5 +141,16 @@ public class GameManager : MonoBehaviour
     public bool GetBeginPlay()
     {
         return _beginPlay;
+    }
+
+    public void PlayActionSound()
+    {
+        _gameSound.clip = _actionSound;
+        _gameSound.Play();
+    }
+    public void PlayDeadSound()
+    {
+        _gameSound.clip = _deadSound;
+        _gameSound.Play();
     }
 }

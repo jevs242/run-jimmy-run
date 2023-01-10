@@ -10,6 +10,7 @@ public class Obstacle : MonoBehaviour
     private BoxCollider2D _boxCollider;
     private int _random;
     private GameManager _gameManager;
+    [SerializeField]private GameObject _saw;
 
     private Vector3 _startPosition;
     private Vector3 _endPosition = new Vector3(0, 1, 0);
@@ -28,9 +29,11 @@ public class Obstacle : MonoBehaviour
     {
         _boxCollider.size = new Vector2(0.825307846f, 0.49619019f);
         transform.localPosition = new Vector3(0, 1.27683139f, 0);
+        _saw.transform.localPosition = new Vector3(0, 1.27683139f, 0);
         transform.localRotation = Quaternion.identity;
         SetRandom(_gameManager.GetLastRandom());
         _gameManager.SetLastRandom(_random);
+        _saw.GetComponent<SpriteRenderer>().sprite = null;
         _spriteRenderer.sprite = _sprite[_random];
         _startPosition = transform.position;
         _startPosition.x = 0;
@@ -39,8 +42,11 @@ public class Obstacle : MonoBehaviour
             case 0:
                 break;
             case 1:
-                transform.position += new Vector3(0 , .7f, 0);
-                _boxCollider.size = new Vector2(_boxCollider.size.x - 0.5f, 1.5f);
+                _spriteRenderer.sprite = null;
+                _saw.GetComponent<SpriteRenderer>().sprite = _sprite[_random];
+                _saw.transform.position += new Vector3(0 , .7f, 0);
+                transform.position += new Vector3(0, .7f, 0);
+                _boxCollider.size = new Vector2(0.5f, 1.5f);
                 break;
             case 2:
                 transform.position += new Vector3(0, 2, 0);
@@ -56,7 +62,7 @@ public class Obstacle : MonoBehaviour
     {
         if(_random == 1)
         {
-            transform.eulerAngles += new Vector3(0, 0, 40 * Time.deltaTime);
+            _saw.transform.eulerAngles += new Vector3(0, 0, 40 * Time.deltaTime);
         }
 
         if(_random == 2 && _playerDead)
@@ -84,14 +90,11 @@ public class Obstacle : MonoBehaviour
 
         if(_random == 2)
         {
-            //transform.localPosition = new Vector3(0, 1.27683139f, 0);
             _startPosition.x = transform.position.x;
             _endPosition.y = transform.position.y;
             _endPosition.x = transform.position.x;
             _playerDead = true;
         }
-
-        //Destroy(other.gameObject);
 
         if(_gameManager)
         {

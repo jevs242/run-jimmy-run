@@ -1,10 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Net.NetworkInformation;
-using UnityEditor.Build;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Rendering.VirtualTexturing;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -13,13 +9,15 @@ public class Player : MonoBehaviour
     [SerializeField] private LayerMask _layerMask;
     [SerializeField] private Sprite _idleSprite;
     [SerializeField] private GameObject _deadParticle;
+    [SerializeField] private GameObject _imageFill;
     
     private bool isInDash = false;
-    private float nowSpeed = 0;
+    public float nowSpeed = 0;
 
     private float _resistence = 0;
     private float _maxResistence = 100;
     private bool empty;
+    private bool _dead;
 
 
     private InputAction _jumpAction;
@@ -75,9 +73,11 @@ public class Player : MonoBehaviour
 
     public void PlayParticule()
     {
+        if(_dead) return;
+        _dead = true;
+        _gameManager.PlayDeadSound();
         Vector3 Loc = this.transform.position;
         Loc.y -= 0.4f;
-
         Instantiate(_deadParticle , Loc , Quaternion.identity);
     }
 
@@ -88,6 +88,7 @@ public class Player : MonoBehaviour
 
         if (_jumpAction.triggered && GetGrounded() && !_crouchAction.IsPressed())
         {
+            _gameManager.PlayActionSound();
             _rb.AddForce(transform.up * _jumpForce);
             isInDash = false;
             speed = nowSpeed;
@@ -99,19 +100,24 @@ public class Player : MonoBehaviour
     {
         if(_crouchAction.IsPressed() && GetGrounded() && Time.timeScale == 1)
         {
+            if(_crouchAction.triggered)
+            {
+                _gameManager.PlayActionSound();
+            }
+
             transform.localScale = new Vector3(transform.localScale.x, 0.5f, transform.localScale.z );
             _capsuleCollider2D.size = new Vector2(0.75f, 0.75f);
-            transform.position = new Vector3(transform.position.x, -3.39f, transform.position.z);
+            transform.position = new Vector3(transform.position.x, -3.45f, transform.position.z);
         }
         else
         {
-            transform.localScale = new Vector3(transform.localScale.x, 1, transform.localScale.z );
+            transform.localScale = new Vector3(transform.localScale.x, 0.75f, transform.localScale.z );
             _capsuleCollider2D.size = new Vector2(1.50f, 1.50f);
         }
 
         if(!_jumpAction.IsPressed() && GetGrounded() && !_crouchAction.IsPressed())
         {
-            transform.position = new Vector3(transform.position.x, -2.977948f, transform.position.z);
+            transform.position = new Vector3(transform.position.x, -3.17545748f, transform.position.z); 
         }
     }
 
@@ -119,7 +125,10 @@ public class Player : MonoBehaviour
     {
         if(_dashAction.IsPressed() && GetGrounded() && !_crouchAction.IsPressed() && !empty)
         {
-
+            if (_dashAction.triggered)
+            {
+                _gameManager.PlayActionSound();
+            }
             isInDash = true;
             speed = nowSpeed + 2;
             _resistence -= 50 * Time.deltaTime;
@@ -128,6 +137,7 @@ public class Player : MonoBehaviour
             if(_resistence <= 0)
             {
                 empty = true;
+                _imageFill.GetComponent<Image>().color = new Color32(239, 84, 79 , 200);
             }
 
         }
@@ -141,10 +151,9 @@ public class Player : MonoBehaviour
             if (_resistence >= _maxResistence)
             {
                 empty = false;
+                _imageFill.GetComponent<Image>().color = new Color32(137, 196, 251,200);
             }
         }
-        //print(_resistence);
-
     }
 
     public void SetPause()
