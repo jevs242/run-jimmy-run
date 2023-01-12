@@ -48,12 +48,12 @@ public class GameManager : MonoBehaviour
         _distance += Time.deltaTime * (int)_player.gameObject.GetComponent<Player>().speed;
         SetUI();
 
-        if ((int)_distance % 400 == 0 && (int)_distance != _currentNumber)
+        if ((int)_distance % 200 == 0 && (int)_distance != _currentNumber)
         {
             _currentNumber = (int)_distance;
             print((int)_distance);
             _player.gameObject.GetComponent<Player>().nowSpeed += 1.0f;
-            _player.gameObject.GetComponent<Player>().nowSpeed = Math.Clamp(_player.gameObject.GetComponent<Player>().nowSpeed, 10, 14);
+            _player.gameObject.GetComponent<Player>().nowSpeed = Math.Clamp(_player.gameObject.GetComponent<Player>().nowSpeed, 8, 10);
         }
     }
 

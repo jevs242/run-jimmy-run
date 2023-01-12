@@ -6376,9 +6376,9 @@ IL_0009:
 		__this->____distance_20 = ((float)il2cpp_codegen_add(L_1, ((float)il2cpp_codegen_multiply(L_2, ((float)il2cpp_codegen_cast_double_to_int<int32_t>(L_6))))));
 		// SetUI();
 		GameManager_SetUI_mFA9955754B7F0961B7B4CC3AC9F483CBEB58B8E9(__this, NULL);
-		// if ((int)_distance % 400 == 0 && (int)_distance != _currentNumber)
+		// if ((int)_distance % 200 == 0 && (int)_distance != _currentNumber)
 		float L_7 = __this->____distance_20;
-		if (((int32_t)(il2cpp_codegen_cast_double_to_int<int32_t>(L_7)%((int32_t)400))))
+		if (((int32_t)(il2cpp_codegen_cast_double_to_int<int32_t>(L_7)%((int32_t)200))))
 		{
 			goto IL_00d2;
 		}
@@ -6409,7 +6409,7 @@ IL_0009:
 		Player_tF98BD09D3495D2FF1922E5D34866AEAC6AE2DF74* L_17 = L_16;
 		float L_18 = L_17->___nowSpeed_11;
 		L_17->___nowSpeed_11 = ((float)il2cpp_codegen_add(L_18, (1.0f)));
-		// _player.gameObject.GetComponent<Player>().nowSpeed = Math.Clamp(_player.gameObject.GetComponent<Player>().nowSpeed, 10, 14);
+		// _player.gameObject.GetComponent<Player>().nowSpeed = Math.Clamp(_player.gameObject.GetComponent<Player>().nowSpeed, 8, 10);
 		GameObject_t76FEDD663AB33C991A9C9A23129337651094216F* L_19 = __this->____player_8;
 		GameObject_t76FEDD663AB33C991A9C9A23129337651094216F* L_20;
 		L_20 = GameObject_get_gameObject_m0878015B8CF7F5D432B583C187725810D27B57DC(L_19, NULL);
@@ -6423,7 +6423,7 @@ IL_0009:
 		float L_25 = L_24->___nowSpeed_11;
 		il2cpp_codegen_runtime_class_init_inline(Math_tEB65DE7CA8B083C412C969C92981C030865486CE_il2cpp_TypeInfo_var);
 		float L_26;
-		L_26 = Math_Clamp_m2D8871E051EC5CE8F3960882AE72E2AD5A1C410F_inline(L_25, (10.0f), (14.0f), NULL);
+		L_26 = Math_Clamp_m2D8871E051EC5CE8F3960882AE72E2AD5A1C410F_inline(L_25, (8.0f), (10.0f), NULL);
 		L_21->___nowSpeed_11 = L_26;
 	}
 
@@ -8168,9 +8168,9 @@ IL_004e:
 	{
 		// isInDash = true;
 		__this->___isInDash_10 = (bool)1;
-		// speed = nowSpeed + 2;
+		// speed = nowSpeed + 1;
 		float L_9 = __this->___nowSpeed_11;
-		__this->___speed_4 = ((float)il2cpp_codegen_add(L_9, (2.0f)));
+		__this->___speed_4 = ((float)il2cpp_codegen_add(L_9, (1.0f)));
 		// _resistence -= 50 * Time.deltaTime;
 		float L_10 = __this->____resistence_12;
 		float L_11;

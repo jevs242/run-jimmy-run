@@ -130,7 +130,7 @@ public class Player : MonoBehaviour
                 _gameManager.PlayActionSound();
             }
             isInDash = true;
-            speed = nowSpeed + 2;
+            speed = nowSpeed + 1;
             _resistence -= 50 * Time.deltaTime;
             _resistence = Mathf.Clamp(_resistence, 0, _maxResistence);
 
