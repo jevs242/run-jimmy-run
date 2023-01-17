@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class WebButton : MonoBehaviour
@@ -12,11 +10,5 @@ public class WebButton : MonoBehaviour
 #else
     gameObject.SetActive(true);
 #endif
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

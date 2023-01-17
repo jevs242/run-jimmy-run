@@ -1,23 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 
 public class Map : MonoBehaviour
 {
-    [SerializeField] GameObject _firstBg;
-    [SerializeField] GameObject _secondBg;
-    [SerializeField] public GameObject _thridBg;
-    [SerializeField] GameObject _background;
-    [SerializeField] Camera _camera;
+    [Header("Component Reference")]
+    [SerializeField] private GameObject _firstBg;
+    [SerializeField] private GameObject _secondBg;
+    [SerializeField] private GameObject _thridBg;
+    [SerializeField] private GameObject _background;
+    [SerializeField] private Camera _camera;
+    private Player _player;
+    private GameManager _gameManager;
 
+    [Header("Action")]
     bool phase1;
     bool phase2;
     public bool phase3;
 
-    private Player _player;
-    private GameManager _gameManager;
+    [Header("Transform")]
     private Vector3 _beginLocation;
 
     private void Awake()

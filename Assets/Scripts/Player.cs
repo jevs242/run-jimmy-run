@@ -4,33 +4,35 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
+    [Header("Actions")]
     [SerializeField] public float speed;
     [SerializeField] private float _jumpForce;
     [SerializeField] private LayerMask _layerMask;
     [SerializeField] private Sprite _idleSprite;
-    [SerializeField] private GameObject _deadParticle;
-    [SerializeField] private GameObject _imageFill;
-    
     private bool isInDash = false;
-    public float nowSpeed = 0;
-
     private float _resistence = 0;
     private float _maxResistence = 100;
     private bool empty;
     private bool _dead;
+    public float nowSpeed = 0;
+    
+    [Header("UI")]
+    [SerializeField] private GameObject _imageFill;
 
+    [Header("Component Reference")]
+    [SerializeField] private GameObject _deadParticle;
+    private CapsuleCollider2D _capsuleCollider2D;
+    private PlayerInput _inputPlayer;
+    private Rigidbody2D _rb;
+    private Animator _animator;
+    private GameManager _gameManager;
 
+    [Header("Input")]
     private InputAction _jumpAction;
     private InputAction _dashAction;
     private InputAction _crouchAction;
     private InputAction _pauseAction;
 
-    private CapsuleCollider2D _capsuleCollider2D;
-    private PlayerInput _inputPlayer;
-    private Rigidbody2D _rb;
-    private Animator _animator;
-   
-    private GameManager _gameManager;
 
     private void Awake()
     {

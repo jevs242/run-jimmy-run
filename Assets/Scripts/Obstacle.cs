@@ -1,22 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Obstacle : MonoBehaviour
 {
-    [SerializeField] Sprite[] _sprite;
+    [Header("Sprite")]
+    [SerializeField]private Sprite[] _sprite;
 
+    [Header("Component Reference")]
+    [SerializeField] private GameObject _saw;
     private SpriteRenderer _spriteRenderer;
     private BoxCollider2D _boxCollider;
-    private int _random;
     private GameManager _gameManager;
-    [SerializeField]private GameObject _saw;
 
-    private Vector3 _startPosition;
-    private Vector3 _endPosition = new Vector3(0, 1, 0);
+    [Header("Actions")]
+    private int _random;
+    private bool _playerDead;
+
+    [Header("Time")]
     private float desiredDuration = 0.05f;
     private float elapsedTime;
-    private bool _playerDead;
+
+    [Header("Transform")]
+    private Vector3 _startPosition;
+    private Vector3 _endPosition = new Vector3(0, 1, 0);
 
     private void Awake()
     {

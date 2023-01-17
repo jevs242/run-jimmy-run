@@ -1,32 +1,32 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    [Header("Component Reference")]
+    [SerializeField] private GameObject _player;
+
+    [Header("UI")]
     [SerializeField] private GameObject _gameOverScreen;
     [SerializeField] private GameObject _pauseScreen;
     [SerializeField] private GameObject _menuScreen;
     [SerializeField] private GameObject _gameScreen;
-    [SerializeField] private GameObject _player;
     [SerializeField] private TextMeshProUGUI _distanceText;
     [SerializeField] private Slider _resistenceSlider;
     [SerializeField] private TextMeshProUGUI _highScoreText;
     [SerializeField] private TextMeshProUGUI _ScoreText;
+
+    [Header("Sound")]
     [SerializeField] private AudioSource _menuSong;
     [SerializeField] private AudioSource _gameSound;
-
     [SerializeField] private AudioClip _endSong;
     [SerializeField] private AudioClip _actionSound;
     [SerializeField] private AudioClip _deadSound;
 
-
-
+    [Header("Actions")]
     private bool _beginPlay = false;
     private bool _endPlay = false;
     private float _distance = 0;
