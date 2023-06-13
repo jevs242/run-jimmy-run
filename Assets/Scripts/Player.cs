@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
     private bool empty;
     private bool _dead;
     public float nowSpeed = 0;
-    
+
     [Header("UI")]
     [SerializeField] private GameObject _imageFill;
 
@@ -33,6 +33,9 @@ public class Player : MonoBehaviour
     private InputAction _crouchAction;
     private InputAction _pauseAction;
 
+    private bool _jumpActionphone;
+    private bool _dashActionphone;
+    private bool _crouchActionphone;
 
     private void Awake()
     {
@@ -40,7 +43,7 @@ public class Player : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _inputPlayer = GetComponent<PlayerInput>();
         _capsuleCollider2D = GetComponent<CapsuleCollider2D>();
-        _animator= GetComponent<Animator>();
+        _animator = GetComponent<Animator>();
 
         _jumpAction = _inputPlayer.actions["Jump"];
         _dashAction = _inputPlayer.actions["Dash"];
@@ -60,7 +63,7 @@ public class Player : MonoBehaviour
     {
         SetAnimation();
         if (!_gameManager.GetBeginPlay()) return;
-        
+
         IsGrounded();
         IsCrouch();
         IsDash();
@@ -70,17 +73,17 @@ public class Player : MonoBehaviour
     void SetAnimation()
     {
         _animator.SetBool("Run", _gameManager.GetBeginPlay());
-        _animator.SetBool("NotGrounded" , !GetGrounded());
+        _animator.SetBool("NotGrounded", !GetGrounded());
     }
 
     public void PlayParticule()
     {
-        if(_dead) return;
+        if (_dead) return;
         _dead = true;
         _gameManager.PlayDeadSound();
         Vector3 Loc = this.transform.position;
         Loc.y -= 0.4f;
-        Instantiate(_deadParticle , Loc , Quaternion.identity);
+        Instantiate(_deadParticle, Loc, Quaternion.identity);
     }
 
     void IsGrounded()
@@ -100,32 +103,32 @@ public class Player : MonoBehaviour
 
     void IsCrouch()
     {
-        if(_crouchAction.IsPressed() && GetGrounded() && Time.timeScale == 1)
+        if (_crouchAction.IsPressed() && GetGrounded() && Time.timeScale == 1)
         {
-            if(_crouchAction.triggered)
+            if (_crouchAction.triggered)
             {
                 _gameManager.PlayActionSound();
             }
 
-            transform.localScale = new Vector3(transform.localScale.x, 0.5f, transform.localScale.z );
+            transform.localScale = new Vector3(transform.localScale.x, 0.5f, transform.localScale.z);
             _capsuleCollider2D.size = new Vector2(0.75f, 0.75f);
             transform.position = new Vector3(transform.position.x, -3.45f, transform.position.z);
         }
         else
         {
-            transform.localScale = new Vector3(transform.localScale.x, 0.75f, transform.localScale.z );
+            transform.localScale = new Vector3(transform.localScale.x, 0.75f, transform.localScale.z);
             _capsuleCollider2D.size = new Vector2(1.50f, 1.50f);
         }
 
-        if(!_jumpAction.IsPressed() && GetGrounded() && !_crouchAction.IsPressed())
+        if (!_jumpAction.IsPressed() && GetGrounded() && !_crouchAction.IsPressed())
         {
-            transform.position = new Vector3(transform.position.x, -3.17545748f, transform.position.z); 
+            transform.position = new Vector3(transform.position.x, -3.17545748f, transform.position.z);
         }
     }
 
     void IsDash()
     {
-        if(_dashAction.IsPressed() && GetGrounded() && !_crouchAction.IsPressed() && !empty)
+        if (_dashAction.IsPressed() && GetGrounded() && !_crouchAction.IsPressed() && !empty)
         {
             if (_dashAction.triggered)
             {
@@ -136,10 +139,10 @@ public class Player : MonoBehaviour
             _resistence -= 50 * Time.deltaTime;
             _resistence = Mathf.Clamp(_resistence, 0, _maxResistence);
 
-            if(_resistence <= 0)
+            if (_resistence <= 0)
             {
                 empty = true;
-                _imageFill.GetComponent<Image>().color = new Color32(239, 84, 79 , 200);
+                _imageFill.GetComponent<Image>().color = new Color32(239, 84, 79, 200);
             }
 
         }
@@ -153,17 +156,17 @@ public class Player : MonoBehaviour
             if (_resistence >= _maxResistence)
             {
                 empty = false;
-                _imageFill.GetComponent<Image>().color = new Color32(137, 196, 251,200);
+                _imageFill.GetComponent<Image>().color = new Color32(137, 196, 251, 200);
             }
         }
     }
 
     public void SetPause()
     {
-       if(_pauseAction.IsPressed() && GetGrounded() && !GetCrouch() && !GetDash())
-       {
+        if (_pauseAction.IsPressed() && GetGrounded() && !GetCrouch() && !GetDash())
+        {
             _gameManager.SetPause();
-       }
+        }
     }
 
     public float GetSpeed()
@@ -198,4 +201,18 @@ public class Player : MonoBehaviour
         return empty;
     }
 
+    public void SetJumpActionphone(bool jump)
+    {
+        _jumpActionphone = jump;
+    }
+
+    public void SetDashActionphone(bool dash)
+    {
+        _dashActionphone = dash;
+    }
+
+    public void SetCrouchActionphone(bool crouch)
+    {
+        _crouchActionphone = crouch;
+    }
 }

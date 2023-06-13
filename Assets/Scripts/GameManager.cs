@@ -62,8 +62,8 @@ public class GameManager : MonoBehaviour
         ResumeGame();
         _gameScreen.gameObject.SetActive(true);
         _beginPlay = true;
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        //Cursor.lockState = CursorLockMode.Locked;
+        ///Cursor.visible = false;
     }
 
     public void QuitGame()
@@ -79,8 +79,8 @@ public class GameManager : MonoBehaviour
     public void ResumeGame()
     {
         _beginPlay = true;
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        //Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.visible = false;
     }
 
     public void ResetGame()
