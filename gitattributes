@@ -1,4 +1,0 @@
-*.cpp linguist-detectable=false
-*.h linguist-detectable=false
-*.shader linguist-detectable=false
-*.cginc linguist-detectable=false
