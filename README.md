@@ -1,16 +1,22 @@
-## Run Jimmy Run
+# Run Jimmy Run
 
-This project is a game developed using Unity.
+**Run Jimmy Run** is a fast-paced platformer developed using **Unity**, featuring challenging obstacles and endless running fun.
 
-## Quick Start
+## 🚀 Quick Start
 
-Open this project in Unity by navigating to the project folder after cloning or downloading.
+To open the project in **Unity**, follow these steps:
 
-## Requirements
+1. **Clone or Download** the repository.
+2. **Navigate** to the project folder.
+3. **Open the project** using **Unity Editor** (Recommended version: **6000.0.41f1**).
 
-- Unity Editor (Version recommended: 6000.0.41f1)
+## 📋 Requirements
 
-Enjoy exploring the project!
+- **Unity Editor** (Version **6000.0.41f1** recommended)
+- Compatible system: **Windows, macOS, or Linux**
 
-## Where to play it 
-https://two42studios.itch.io/runjimmyrun
+## 🎮 Where to Play?
+
+Play **Run Jimmy Run** on **Itch.io**: 🔗 [Play Now](https://two42studios.itch.io/runjimmyrun)
+
+Enjoy exploring the project! 🎮🔥
